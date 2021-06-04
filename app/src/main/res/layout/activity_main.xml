@@ -14,6 +14,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="90dp"
+            android:scaleType="fitXY"
             android:src="@mipmap/head_profile_image" />
 
         <include layout="@layout/portrait_information_friend" />

@@ -1,3 +1,3 @@
 package zy.douyinpersonalpage
 
-data class Video(val src:Int)
+data class Video(val src:Int,val backgroundColor:Int)

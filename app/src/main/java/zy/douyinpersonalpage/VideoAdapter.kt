@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class VideoAdapter(val list:List<Video>) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+class VideoAdapter(var list:MutableList<Video>) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
     inner class ViewHolder(view:View) : RecyclerView.ViewHolder(view){
         val imageView = view.findViewById<ImageView>(R.id.video_item_ImageView)
     }
@@ -19,13 +19,12 @@ class VideoAdapter(val list:List<Video>) : RecyclerView.Adapter<VideoAdapter.Vie
         viewHolder.imageView.setOnClickListener {
             Toast.makeText(parent.context,"click me",Toast.LENGTH_SHORT)
         }
-
         return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.imageView.setImageResource(list[position].src)
+        holder.imageView.setBackgroundColor(list[position].backgroundColor)
     }
-
     override fun getItemCount() = list.size
 }

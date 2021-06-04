@@ -6,13 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.fragment_works.*
 import zy.douyinpersonalpage.R
 import zy.douyinpersonalpage.Video
 import zy.douyinpersonalpage.VideoAdapter
+import zy.douyinpersonalpage.viewmodel.WorksFragmentViewModel
+import zy.douyinpersonalpage.viewmodel.WorksFragmentViewModelFactory
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +34,7 @@ class WorksFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var viewModel: WorksFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +42,8 @@ class WorksFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        viewModel = ViewModelProvider(this,WorksFragmentViewModelFactory(null)).get(WorksFragmentViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -45,13 +54,25 @@ class WorksFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_works, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.workRecyclerView)
-
-        Log.d("MainActivity","null?${recyclerView == null}")
+        val addButton = view.findViewById<Button>(R.id.addButton).apply {
+            setOnClickListener {
+                viewModel.add(Video(R.mipmap.izumisakai, R.color.red))
+                Log.d("MainActivity","${viewModel.videoList.value?.size}")
+            }
+        }
 
         val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+
         recyclerView.layoutManager = layoutManager
-        val adapter = VideoAdapter(initVideoList())
+
+        val adapter = VideoAdapter(viewModel.videoList.value!!)
         recyclerView.adapter = adapter
+
+        viewModel.videoList.observe(viewLifecycleOwner) {
+            adapter.list = it
+            adapter.notifyItemInserted(adapter.list.size - 1)
+        }
+
         return view
     }
 
@@ -77,24 +98,26 @@ class WorksFragment : Fragment() {
 
     private fun initVideoList():ArrayList<Video>{
         val arrayList = ArrayList<Video>().apply {
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
-            add(Video(R.mipmap.izumisakai))
-            add(Video(R.mipmap.portrait))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
+            add(Video(R.mipmap.izumisakai,R.color.red))
+            add(Video(R.mipmap.portrait,R.color.red))
         }
         return arrayList
     }

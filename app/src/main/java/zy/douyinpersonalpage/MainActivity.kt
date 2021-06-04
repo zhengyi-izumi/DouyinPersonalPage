@@ -43,9 +43,5 @@ class MainActivity : AppCompatActivity() {
         viewPager2 = bottomViewPager
 
         viewPager2.adapter = MyViewPager2Adapter(this)
-
-
     }
-
-
 }
